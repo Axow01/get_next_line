@@ -6,7 +6,7 @@
 /*   By: mmarcott <mmarcott@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 01:16:49 by mmarcott          #+#    #+#             */
-/*   Updated: 2022/11/25 04:17:19 by mmarcott         ###   ########.fr       */
+/*   Updated: 2022/11/25 05:39:17 by mmarcott         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,13 @@ char	*get_next_line(int fd)
 
 	i = 0;
 	b = 0;
+	k = 0;
 	bytes = 1;
 	buffer = malloc(BUFFER_SIZE * sizeof(char));
 	currentread = malloc(BUFFER_SIZE * sizeof(char));
-	printf("%s\n", stash);
-	while (bytes != 0)
+	if (stash)
+		buffer = ft_strjoin((const char *)buffer, (const char *)stash);
+	while (bytes > 0)
 	{
 		bytes = read(fd, currentread, BUFFER_SIZE);
 		buffer = ft_strjoin((const char *)buffer, (const char *)currentread);
@@ -48,7 +50,7 @@ char	*get_next_line(int fd)
 	}
 	return (NULL);
 }
-
+/*
 int	main(void)
 {
 	int	fd;
@@ -57,6 +59,10 @@ int	main(void)
 	printf("%s", get_next_line(fd));
 	printf("%s", get_next_line(fd));
 	printf("%s", get_next_line(fd));
+	printf("%s", get_next_line(fd));
+	printf("%s", get_next_line(fd));
+	printf("%s", get_next_line(fd));
+	printf("%s", get_next_line(fd));
 	close(fd);
 	return (0);
-}
+}*/
