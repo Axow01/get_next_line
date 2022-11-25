@@ -6,31 +6,35 @@
 /*   By: mmarcott <mmarcott@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 01:19:06 by mmarcott          #+#    #+#             */
-/*   Updated: 2022/11/25 05:44:54 by mmarcott         ###   ########.fr       */
+/*   Updated: 2022/11/25 08:36:13 by mmarcott         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int	check_for_nl(char *stash)
+char	*check_for_nl(char *stash, char *buffer)
 {
 	int	i;
 	int	k;
+	int	b;
 
+	b = 0;
 	k = 0;
 	i = 0;
-	while (stash[i])
+	while (buffer[i])
 	{
-		if (stash[i] == '\n')
+		if (buffer[i++] == '\n')
 		{
-			k = i + 1;
-			while (stash[k])
-				stash[k++] = 0;
-			return (1);
+			stash = malloc(BUFFER_SIZE * sizeof(char));
+			k += i;
+			while (buffer[k])
+				stash[b++] = buffer[k++];
+			stash[b] = 0;
+			buffer[i] = 0;
+			return (buffer);
 		}
-		i++;
 	}
-	return (0);
+	return (NULL);
 }
 
 int	ft_strlen(char *s)
@@ -66,4 +70,13 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	}
 	joined[i + j] = '\0';
 	return (joined);
+}
+
+void	ezero(char *s)
+{
+	int	i;
+
+	i = 0;
+	while (s[i])
+		s[i++] = 0;
 }
