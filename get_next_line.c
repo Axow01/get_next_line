@@ -6,7 +6,7 @@
 /*   By: mmarcott <mmarcott@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 01:16:49 by mmarcott          #+#    #+#             */
-/*   Updated: 2022/11/25 05:39:17 by mmarcott         ###   ########.fr       */
+/*   Updated: 2022/11/25 05:48:34 by mmarcott         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,19 +50,18 @@ char	*get_next_line(int fd)
 	}
 	return (NULL);
 }
-/*
+
 int	main(void)
 {
-	int	fd;
+	int		fd;
+	char	*c;
 
 	fd = open("fichiertest", O_RDONLY);
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
+	while (c)
+	{
+		c = get_next_line(fd);
+		printf("%s", c);
+	}
 	close(fd);
 	return (0);
-}*/
+}
