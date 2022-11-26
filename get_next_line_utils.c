@@ -6,41 +6,30 @@
 /*   By: mmarcott <mmarcott@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 01:19:06 by mmarcott          #+#    #+#             */
-/*   Updated: 2022/11/25 08:36:13 by mmarcott         ###   ########.fr       */
+/*   Updated: 2022/11/26 04:10:33 by mmarcott         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*check_for_nl(char *stash, char *buffer)
+void	cleanup_stash(char **stash, char *line)
 {
 	int	i;
 	int	k;
-	int	b;
 
-	b = 0;
-	k = 0;
+	k = ft_strlen(line);
 	i = 0;
-	while (buffer[i])
-	{
-		if (buffer[i++] == '\n')
-		{
-			stash = malloc(BUFFER_SIZE * sizeof(char));
-			k += i;
-			while (buffer[k])
-				stash[b++] = buffer[k++];
-			stash[b] = 0;
-			buffer[i] = 0;
-			return (buffer);
-		}
-	}
-	return (NULL);
+	while (stash[0][k])
+		stash[0][i++] = stash[0][k++];
+	stash[0][i] = 0;
 }
 
 int	ft_strlen(char *s)
 {
 	int	i;
 
+	if (!s)
+		return (0);
 	i = 0;
 	while (s[i])
 		i++;
@@ -72,11 +61,8 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	return (joined);
 }
 
-void	ezero(char *s)
+void	init(char **s)
 {
-	int	i;
-
-	i = 0;
-	while (s[i])
-		s[i++] = 0;
+	*s = malloc(sizeof(char));
+	s[0][0] = 0;
 }

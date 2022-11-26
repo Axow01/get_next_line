@@ -6,7 +6,7 @@
 /*   By: mmarcott <mmarcott@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 01:17:29 by mmarcott          #+#    #+#             */
-/*   Updated: 2022/11/25 08:03:40 by mmarcott         ###   ########.fr       */
+/*   Updated: 2022/11/26 04:10:46 by mmarcott         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,18 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-#ifndef BUFFER_SIZE
-#define BUFFER_SIZE
-#endif
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 5
+# endif
 
 char	*get_next_line(int fd);
-char	*check_for_nl(char *stash, char *buffer);
-void	conc(char *buffer, char *stash);
+void	read_the_file(int fd, char **buffer, int *bytes);
 int		ft_strlen(char *s);
 char	*ft_strjoin(char const *s1, char const *s2);
-void	ezero(char *s);
+void	put_buf_stash(char *stash, char *buffer);
+int		analyse(char *stash);
+void	put_line(char **line, char *stash);
+void	init(char **s);
+void	cleanup_stash(char **stash, char *line);
 
 #endif
