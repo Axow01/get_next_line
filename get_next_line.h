@@ -18,6 +18,10 @@
 # include <stdlib.h>
 # include <unistd.h>
 
+#ifndef BUFFER_SIZE
+#define BUFFER_SIZE
+#endif
+
 char	*get_next_line(int fd);
 char	*check_for_nl(char *stash, char *buffer);
 void	conc(char *buffer, char *stash);

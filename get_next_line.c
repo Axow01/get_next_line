@@ -20,7 +20,7 @@ char	*get_next_line(int fd)
 	int			bytes;
 
 	bytes = 1;
-	buffer = malloc(BUFFER_SIZE * sizeof(char));
+	
 	currentread = malloc(BUFFER_SIZE * sizeof(char));
 	printf("\n---------------\nValue of stash: %s\n---------------\n\n", stash);
 	if (stash)
@@ -31,10 +31,12 @@ char	*get_next_line(int fd)
 	}
 	while (bytes > 0)
 	{
+		buffer = malloc(BUFFER_SIZE * sizeof(char));
 		bytes = read(fd, currentread, BUFFER_SIZE);
 		buffer = ft_strjoin((const char *)buffer, (const char *)currentread);
 		if (check_for_nl(stash, buffer))
 			return (check_for_nl(stash, buffer));
+		free(buffer);
 	}
 	return (NULL);
 }
