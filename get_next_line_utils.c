@@ -6,7 +6,7 @@
 /*   By: mmarcott <mmarcott@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 01:19:06 by mmarcott          #+#    #+#             */
-/*   Updated: 2022/11/26 07:43:19 by mmarcott         ###   ########.fr       */
+/*   Updated: 2022/11/27 02:43:47 by mmarcott         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,4 +66,16 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	free((char *)s1);
 	free((char *)s2);
 	return (joined);
+}
+
+void	ft_free(void *p)
+{
+	if (p)
+		free(p);
+}
+
+void	finalise(char **line, char **stash)
+{
+	put_line(line, *stash);
+	cleanup_stash(stash, *line);
 }
