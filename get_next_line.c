@@ -6,7 +6,7 @@
 /*   By: mmarcott <mmarcott@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 01:16:49 by mmarcott          #+#    #+#             */
-/*   Updated: 2022/11/26 04:15:16 by mmarcott         ###   ########.fr       */
+/*   Updated: 2022/11/26 08:07:39 by mmarcott         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,16 +31,29 @@ char	*get_next_line(int fd)
 	int			bytes;
 
 	bytes = 1;
-	if (!stash)
-		init(&stash);
+	line = NULL;
 	if (read(fd, &buffer, 0) < 0 || fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	while (bytes > 0)
+	while (1)
 	{
 		read_the_file(fd, &buffer, &bytes);
+		if (bytes <= 0)
+		{
+			free(buffer);
+			if (stash)
+				free(stash);
+			return (NULL);
+		}
 		stash = ft_strjoin((const char *)stash, (const char *)buffer);
-		free(buffer);
+		if (!stash)
+			return (NULL);
 		if (analyse(stash))
+		{
+			put_line(&line, stash);
+			cleanup_stash(&stash, line);
+			return (line);
+		}
+		else if (!analyse(stash) && bytes < BUFFER_SIZE)
 		{
 			put_line(&line, stash);
 			cleanup_stash(&stash, line);
@@ -53,8 +66,14 @@ char	*get_next_line(int fd)
 void	read_the_file(int fd, char **buffer, int *bytes)
 {
 	*buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
-	*bytes = (int)read(fd, *buffer, BUFFER_SIZE);
-	buffer[0][BUFFER_SIZE] = 0;
+	*bytes = read(fd, *buffer, BUFFER_SIZE);
+	if (bytes < 0)
+	{
+		free(buffer);
+		buffer = NULL;
+	}
+	else
+		buffer[0][BUFFER_SIZE] = 0;
 }
 
 int	analyse(char *stash)
@@ -81,25 +100,7 @@ void	put_line(char **line, char *stash)
 		line[0][i] = stash[i];
 		i++;
 	}
-	line[0][i] = '\n';
-	line[0][++i] = 0;
-}
-
-int	main(void)
-{
-	int		fd;
-	char	*c;
-	int		i;
-
-	i = 0;
-	fd = open("fichiertest", O_RDONLY);
-	while (i < 10)
-	{
-		c = get_next_line(fd);
-		printf("%s", c);
-		free(c);
-		i++;
-	}
-	close(fd);
-	return (0);
+	if (stash[i] == '\n')
+		line[0][i++] = '\n';
+	line[0][i] = 0;
 }

@@ -6,7 +6,7 @@
 /*   By: mmarcott <mmarcott@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 01:17:29 by mmarcott          #+#    #+#             */
-/*   Updated: 2022/11/26 04:10:46 by mmarcott         ###   ########.fr       */
+/*   Updated: 2022/11/26 05:05:37 by mmarcott         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ char	*ft_strjoin(char const *s1, char const *s2);
 void	put_buf_stash(char *stash, char *buffer);
 int		analyse(char *stash);
 void	put_line(char **line, char *stash);
-void	init(char **s);
 void	cleanup_stash(char **stash, char *line);
 
 #endif
