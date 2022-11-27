@@ -6,7 +6,7 @@
 /*   By: mmarcott <mmarcott@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 01:19:06 by mmarcott          #+#    #+#             */
-/*   Updated: 2022/11/27 02:43:47 by mmarcott         ###   ########.fr       */
+/*   Updated: 2022/11/27 04:07:33 by mmarcott         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void	cleanup_stash(char **stash, char *line)
 	i = 0;
 	while (stash && stash[0][k])
 		stash[0][i++] = stash[0][k++];
-	stash[0][i++] = 0;
 	while (stash && stash[0][i])
 		stash[0][i++] = 0;
 }

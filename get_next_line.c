@@ -6,7 +6,7 @@
 /*   By: mmarcott <mmarcott@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 01:16:49 by mmarcott          #+#    #+#             */
-/*   Updated: 2022/11/27 02:47:33 by mmarcott         ###   ########.fr       */
+/*   Updated: 2022/11/27 04:08:47 by mmarcott         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,14 @@ char	*get_next_line(int fd)
 	line = NULL;
 	if (read(fd, &buffer, 0) < 0 || fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	while (bytes == BUFFER_SIZE)
+	while (bytes != 0)
 	{
 		read_the_file(fd, &buffer, &bytes);
 		stash = ft_strjoin((const char *)stash, (const char *)buffer);
 		if (bytes == 0)
 		{
-			finalise(&line, &stash);
-			return (line);
+			free(stash);
+			return (NULL);
 		}
 		if (analyse(stash))
 		{
