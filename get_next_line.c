@@ -6,7 +6,7 @@
 /*   By: mmarcott <mmarcott@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 01:16:49 by mmarcott          #+#    #+#             */
-/*   Updated: 2022/11/27 04:08:47 by mmarcott         ###   ########.fr       */
+/*   Updated: 2022/11/27 05:02:37 by mmarcott         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,33 +34,18 @@ char	*get_next_line(int fd)
 	line = NULL;
 	if (read(fd, &buffer, 0) < 0 || fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	while (bytes != 0)
+	while (1)
 	{
-		read_the_file(fd, &buffer, &bytes);
-		stash = ft_strjoin((const char *)stash, (const char *)buffer);
-		if (bytes == 0)
-		{
-			free(stash);
-			return (NULL);
-		}
-		if (analyse(stash))
-		{
-			finalise(&line, &stash);
-			return (line);
-		}
+		read_the_file(fd, &buffer, &bytes, &stash, &line);
 	}
-	return (NULL);
 }
 
-int	read_the_file(int fd, char **buffer, int *bytes)
+void	read_the_file(int fd, char **buffer, int *bytes, char **stash,
+		char **line)
 {
 	*buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
 	*bytes = read(fd, *buffer, BUFFER_SIZE);
-	if (bytes < 0)
-		free(buffer);
-	else
-		buffer[0][BUFFER_SIZE] = 0;
-	return (1);
+	*stash = ft_strjoin((const char *)*stash, (const char *)*buffer);
 }
 
 int	analyse(char *stash)

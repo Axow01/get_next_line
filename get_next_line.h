@@ -6,7 +6,7 @@
 /*   By: mmarcott <mmarcott@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 01:17:29 by mmarcott          #+#    #+#             */
-/*   Updated: 2022/11/27 02:44:02 by mmarcott         ###   ########.fr       */
+/*   Updated: 2022/11/27 04:24:01 by mmarcott         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@
 # endif
 
 char	*get_next_line(int fd);
-int		read_the_file(int fd, char **buffer, int *bytes);
+void	read_the_file(int fd, char **buffer, int *bytes, char **stash,
+			char **line);
 int		ft_strlen(char *s);
 char	*ft_strjoin(char const *s1, char const *s2);
 void	put_buf_stash(char *stash, char *buffer);

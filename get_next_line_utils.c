@@ -6,7 +6,7 @@
 /*   By: mmarcott <mmarcott@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 01:19:06 by mmarcott          #+#    #+#             */
-/*   Updated: 2022/11/27 04:07:33 by mmarcott         ###   ########.fr       */
+/*   Updated: 2022/11/27 05:06:19 by mmarcott         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	char	*joined;
 	size_t	i;
 	size_t	j;
+	int		z;
 
 	i = 0;
 	j = 0;
