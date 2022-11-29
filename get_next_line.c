@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mmarcott <mmarcott@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 01:16:49 by mmarcott          #+#    #+#             */
-/*   Updated: 2022/11/27 23:03:16 by marvin           ###   ########.fr       */
+/*   Updated: 2022/11/28 20:58:53 by mmarcott         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,18 +39,18 @@ char	*get_next_line(int fd)
 	{
 		read_the_file(fd, &buffer, &bytes);
 		stash = ft_strjoin((const char *)stash, (const char *)buffer);
-		if (bytes == 0 && !ft_find(stash))
+		if (analyse(stash) || (!analyse(stash) && bytes < BUFFER_SIZE))
+		{
+			finalise(&line, &stash);
+			return (line);
+		}
+		if (bytes <= 0 && !ft_find(stash))
 		{
 			free(stash);
 			return (NULL);
 		}
 		else if (ft_find(stash))
 			return(finalise(&line, &stash), line);
-		if (analyse(stash) || (!analyse(stash) && bytes < BUFFER_SIZE))
-		{
-			finalise(&line, &stash);
-			return (line);
-		}
 	}
 	return (NULL);
 }
@@ -102,7 +102,7 @@ int ft_find(char *stash)
 	i = 0;
 	while (stash[i])
 	{
-		if (stash[i] == 0 || stash[i] == '\n')
+		if (stash[i] || stash[i] == '\n')
 			return (1);
 		i++;
 	}
