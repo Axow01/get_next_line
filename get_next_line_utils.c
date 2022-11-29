@@ -6,7 +6,7 @@
 /*   By: mmarcott <mmarcott@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 01:19:06 by mmarcott          #+#    #+#             */
-/*   Updated: 2022/11/27 04:07:33 by mmarcott         ###   ########.fr       */
+/*   Updated: 2022/11/28 22:30:11 by mmarcott         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	ft_strlen(char *s)
 	return (i);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char *s1, char *s2)
 {
 	char	*joined;
 	size_t	i;
@@ -62,15 +62,14 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		j++;
 	}
 	joined[i + j] = '\0';
-	free((char *)s1);
-	free((char *)s2);
-	return (joined);
+	return (s1 = ft_free(s1), s2 = ft_free(s2), joined);
 }
 
-void	ft_free(void *p)
+void	*ft_free(char *p)
 {
 	if (p)
 		free(p);
+	return (NULL);
 }
 
 void	finalise(char **line, char **stash)
