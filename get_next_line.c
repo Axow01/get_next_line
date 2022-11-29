@@ -6,7 +6,7 @@
 /*   By: mmarcott <mmarcott@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 01:16:49 by mmarcott          #+#    #+#             */
-/*   Updated: 2022/11/28 20:58:53 by mmarcott         ###   ########.fr       */
+/*   Updated: 2022/11/28 22:05:59 by mmarcott         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,13 @@ char	*get_next_line(int fd)
 		return (NULL);
 	while (1)
 	{
+		if (bytes <= 0 && !ft_find(stash))
+		{
+			free(stash);
+			return (NULL);
+		}
+		else if (ft_find(stash))
+			return (finalise(&line, &stash), line);
 		read_the_file(fd, &buffer, &bytes);
 		stash = ft_strjoin((const char *)stash, (const char *)buffer);
 		if (analyse(stash) || (!analyse(stash) && bytes < BUFFER_SIZE))
@@ -44,13 +51,6 @@ char	*get_next_line(int fd)
 			finalise(&line, &stash);
 			return (line);
 		}
-		if (bytes <= 0 && !ft_find(stash))
-		{
-			free(stash);
-			return (NULL);
-		}
-		else if (ft_find(stash))
-			return(finalise(&line, &stash), line);
 	}
 	return (NULL);
 }
@@ -95,14 +95,14 @@ void	put_line(char **line, char *stash)
 	line[0][i] = 0;
 }
 
-int ft_find(char *stash)
+int	ft_find(char *stash)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (stash[i])
 	{
-		if (stash[i] || stash[i] == '\n')
+		if (stash[i] == 0 || stash[i] == '\n')
 			return (1);
 		i++;
 	}
