@@ -6,7 +6,7 @@
 /*   By: mick <mick@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 01:16:49 by mmarcott          #+#    #+#             */
-/*   Updated: 2022/11/29 20:20:38 by mick             ###   ########.fr       */
+/*   Updated: 2022/11/29 20:21:21 by mick             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,8 +103,8 @@ int ft_find(char *stash)
 			return (1);
 		i++;
 	}
-	if (bytes == 0 && i > 0)
-		return (1);
+	//if (bytes == 0 && i > 0)
+		//return (1);
 	return (0);
 }
 
@@ -122,9 +122,9 @@ char	*get_next_line(int fd)
 	{
 		read_the_file(fd, &buffer, &bytes);
 		stash = ft_strjoin(stash, buffer);
-		if (!stash || (bytes <= 0 && !ft_find(stash, bytes)))
+		if (!stash || (bytes <= 0 && !ft_find(stash)))
 			return (stash = ft_free(stash) ,NULL);
-		else if (ft_find(stash, bytes))
+		else if (ft_find(stash))
 			return (finalise(&line, &stash), line);
 		if (analyse(stash) || (!analyse(stash) && bytes < BUFFER_SIZE))
 		{
