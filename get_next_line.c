@@ -6,7 +6,7 @@
 /*   By: mick <mick@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 01:16:49 by mmarcott          #+#    #+#             */
-/*   Updated: 2022/11/29 20:21:21 by mick             ###   ########.fr       */
+/*   Updated: 2022/11/29 20:28:41 by mick             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,38 +22,6 @@ Si oui:
 3. Return line.
 Si false: Recommencer en boucle.
 */
-
-char	*get_next_line(int fd)
-{
-	static char	*stash;
-	char		*line;
-	char		*buffer;
-	int			bytes;
-
-	bytes = BUFFER_SIZE;
-	line = NULL;
-	buffer = NULL;
-	if (read(fd, buffer, 0) < 0 || fd < 0 || BUFFER_SIZE <= 0)
-		return (NULL);
-	while (1)
-	{
-		read_the_file(fd, &buffer, &bytes);
-		stash = ft_strjoin((const char *)stash, (const char *)buffer);
-		if (bytes == 0 && !ft_find(stash))
-		{
-			free(stash);
-			return (NULL);
-		}
-		else if (ft_find(stash))
-			return(finalise(&line, &stash), line);
-		if (analyse(stash) || (!analyse(stash) && bytes < BUFFER_SIZE))
-		{
-			finalise(&line, &stash);
-			return (line);
-		}
-	}
-	return (NULL);
-}
 
 int	read_the_file(int fd, char **buffer, int *bytes)
 {
