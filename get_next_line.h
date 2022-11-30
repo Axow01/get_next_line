@@ -6,7 +6,11 @@
 /*   By: mmarcott <mmarcott@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 01:17:29 by mmarcott          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/11/28 22:06:03 by mmarcott         ###   ########.fr       */
+=======
+/*   Updated: 2022/11/28 22:32:34 by mmarcott         ###   ########.fr       */
+>>>>>>> jsp
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +27,11 @@
 # endif
 
 char	*get_next_line(int fd);
-int		read_the_file(int fd, char **buffer, int *bytes);
 int		ft_strlen(char *s);
-char	*ft_strjoin(char const *s1, char const *s2);
-void	put_buf_stash(char *stash, char *buffer);
-int		analyse(char *stash);
-void	put_line(char **line, char *stash);
+char	*ft_strjoin(char *s1, char *s2);
 void	cleanup_stash(char **stash, char *line);
-void	ft_free(void *p);
+void	*ft_free(char *p);
 void	finalise(char **line, char **stash);
-int 	ft_find(char *stash);
+void	put_line(char **line, char *stash);
 
 #endif
