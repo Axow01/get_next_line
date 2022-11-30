@@ -95,10 +95,7 @@ char	*get_next_line(int fd)
 		else if (ft_find(stash))
 			return (finalise(&line, &stash), line);
 		if (analyse(stash) || (!analyse(stash) && bytes < BUFFER_SIZE))
-		{
-			finalise(&line, &stash);
-			return (line);
-		}
+			return (finalise(&line, &stash), line);
 	}
 	return (NULL);
 }
