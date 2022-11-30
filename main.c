@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmarcott <mmarcott@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mick <mick@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/26 05:00:47 by mmarcott          #+#    #+#             */
-/*   Updated: 2022/11/26 07:13:44 by mmarcott         ###   ########.fr       */
+/*   Updated: 2022/11/29 20:45:46 by mick             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ int	main(void)
 	int		i;
 
 	i = 0;
-	fd = open("fichiertest", O_RDONLY);
+	fd = open("empty.txt", O_RDONLY);
 	while (i <= 10)
 	{
 		c = get_next_line(fd);
-		if (c == NULL)
-			break ;
+		//if (c == NULL)
+			//break ;
 		printf("%s", c);
 		free(c);
 		i++;

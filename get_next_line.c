@@ -6,7 +6,7 @@
 /*   By: mick <mick@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 01:16:49 by mmarcott          #+#    #+#             */
-/*   Updated: 2022/11/29 20:28:41 by mick             ###   ########.fr       */
+/*   Updated: 2022/11/29 20:45:07 by mick             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	put_line(char **line, char *stash)
 	line[0][i] = 0;
 }
 
-int ft_find(char *stash)
+int ft_find(char *stash, int bytes)
 {
 	int i;
 
@@ -71,8 +71,8 @@ int ft_find(char *stash)
 			return (1);
 		i++;
 	}
-	//if (bytes == 0 && i > 0)
-		//return (1);
+	if (bytes == 0 && i > 0)
+		return (1);
 	return (0);
 }
 
@@ -84,15 +84,17 @@ char	*get_next_line(int fd)
 	int			bytes;
 
 	bytes = BUFFER_SIZE;
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, &buffer, 0) < 0)
 		return (NULL);
 	while (1)
 	{
 		read_the_file(fd, &buffer, &bytes);
 		stash = ft_strjoin(stash, buffer);
-		if (!stash || (bytes <= 0 && !ft_find(stash)))
+		if (!stash)
+			return (NULL);
+		if (!stash || (bytes <= 0 && !ft_find(stash, bytes)))
 			return (stash = ft_free(stash) ,NULL);
-		else if (ft_find(stash))
+		else if (ft_find(stash, bytes))
 			return (finalise(&line, &stash), line);
 		if (analyse(stash) || (!analyse(stash) && bytes < BUFFER_SIZE))
 			return (finalise(&line, &stash), line);
