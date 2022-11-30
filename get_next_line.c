@@ -6,7 +6,7 @@
 /*   By: mick <mick@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 01:16:49 by mmarcott          #+#    #+#             */
-/*   Updated: 2022/11/29 20:14:42 by mick             ###   ########.fr       */
+/*   Updated: 2022/11/29 20:31:34 by mick             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,10 +95,7 @@ char	*get_next_line(int fd)
 		else if (ft_find(stash, bytes))
 			return (finalise(&line, &stash), line);
 		if (analyse(stash) || (!analyse(stash) && bytes < BUFFER_SIZE))
-		{
-			finalise(&line, &stash);
-			return (line);
-		}
+			return (finalise(&line, &stash), line);
 	}
 	return (NULL);
 }
