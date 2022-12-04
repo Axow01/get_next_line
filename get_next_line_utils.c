@@ -6,7 +6,7 @@
 /*   By: mick <mick@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 01:19:06 by mmarcott          #+#    #+#             */
-/*   Updated: 2022/12/03 22:39:15 by mick             ###   ########.fr       */
+/*   Updated: 2022/12/04 12:17:24 by mick             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ char	*ft_strjoin(char *s1, char *s2)
 		joined[i + j] = s2[j];
 		j++;
 	}
-	joined[i + j] = '\0';
+	joined[i + j] = 0;
 	return (s1 = ft_free(s1), s2 = ft_free(s2), joined);
 }
 
