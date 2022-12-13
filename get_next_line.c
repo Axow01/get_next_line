@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mick <mick@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mmarcott <mmarcott@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 01:16:49 by mmarcott          #+#    #+#             */
-/*   Updated: 2022/12/03 22:40:23 by mick             ###   ########.fr       */
+/*   Updated: 2022/12/12 18:38:15 by mmarcott         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,14 +90,15 @@ char	*get_next_line(int fd)
 	{
 		read_the_file(fd, &buffer, &bytes);
 		stash = ft_strjoin(stash, buffer);
-		if (!stash)
-			return (NULL);
+ 		if (!stash)
+			break;
 		if (!stash || (bytes == 0 && !ft_find(stash, bytes)))
-			return (stash = ft_free(stash) ,NULL);
+			break;
 		else if (ft_find(stash, bytes))
 			return (finalise(&line, &stash), line);
 		if (analyse(stash) || (!analyse(stash) && bytes < BUFFER_SIZE))
 			return (finalise(&line, &stash), line);
 	}
-	return (NULL);
+	stash = ft_free(stash);
+	return (0);
 }
