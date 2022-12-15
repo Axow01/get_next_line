@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmarcott <mmarcott@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mick <mick@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 01:19:06 by mmarcott          #+#    #+#             */
-/*   Updated: 2022/12/12 17:13:54 by mmarcott         ###   ########.fr       */
+/*   Updated: 2022/12/14 23:23:16 by mick             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ void	cleanup_stash(char **stash, char *line)
 
 	k = ft_strlen(line);
 	i = 0;
-	while (stash && stash[0][k])
+	while (stash[0] && stash[0][k])
 		stash[0][i++] = stash[0][k++];
-	while (stash && stash[0][i])
+	while (stash[0] && stash[0][i])
 		stash[0][i++] = 0;
 }
 

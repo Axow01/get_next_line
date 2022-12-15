@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmarcott <mmarcott@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mick <mick@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/26 05:00:47 by mmarcott          #+#    #+#             */
-/*   Updated: 2022/12/12 18:54:34 by mmarcott         ###   ########.fr       */
+/*   Updated: 2022/12/14 23:28:02 by mick             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ int	main(void)
 	while (i < 10)
 	{
 		c = get_next_line(fd);
-		//if (c == NULL)
-			//break ;
-		printf("%s", c);
+		if (c == NULL)
+			break ;
+		printf("%s\n", c);
 		free(c);
 		i++;
 	}

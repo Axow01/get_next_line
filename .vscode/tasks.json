@@ -10,7 +10,7 @@
                 "-Wextra",
                 "-g",
                 "*.c",
-                "-D BUFFER_SIZE=1",
+                "-D BUFFER_SIZE=10000",
                 "-o",
                 "${fileDirname}/${fileBasenameNoExtension}"
             ],
