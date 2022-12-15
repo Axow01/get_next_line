@@ -6,7 +6,7 @@
 /*   By: mick <mick@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 01:16:49 by mmarcott          #+#    #+#             */
-/*   Updated: 2022/12/14 23:41:32 by mick             ###   ########.fr       */
+/*   Updated: 2022/12/15 13:23:28 by mick             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ char	*get_next_line(int fd)
 	line = NULL;
 	bytes = 1;
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, &buffer, 0) < 0)
-		return (stash = ft_free(stash), NULL);
+		return (stash = ft_free(stash), __DARWIN_NULL);
 	while (1)
 	{
 		read_the_file(fd, &buffer, &bytes);
@@ -104,5 +104,5 @@ char	*get_next_line(int fd)
 			return (finalise(&line, &stash), stash = ft_free(stash), line);
 	}
 	stash = ft_free(stash);
-	return (NULL);
+	return (__DARWIN_NULL);
 }
