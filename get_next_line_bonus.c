@@ -1,20 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmarcott <mmarcott@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 01:16:49 by mmarcott          #+#    #+#             */
-/*   Updated: 2022/12/16 13:24:36 by mmarcott         ###   ########.fr       */
+/*   Updated: 2022/12/16 14:55:55 by mmarcott         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 int	read_the_file(int fd, char **buffer, ssize_t *bytes)
 {
 	*buffer = ft_calloc((BUFFER_SIZE + 1), sizeof(char));
+	if (!buffer[0])
+	{
+		*buffer = NULL;
+		return (0);
+	}
 	*bytes = read(fd, *buffer, BUFFER_SIZE);
 	return (1);
 }
@@ -38,6 +43,11 @@ void	put_line(char **line, char *stash)
 
 	i = 0;
 	*line = ft_calloc((ft_strlen(stash) + 1), sizeof(char));
+	if (!line[0])
+	{
+		*line = NULL;
+		return ;
+	}
 	while (stash[i] && stash[i] != '\n')
 	{
 		line[0][i] = stash[i];
@@ -65,28 +75,29 @@ int	ft_find(char *stash, ssize_t bytes)
 
 char	*get_next_line(int fd)
 {
-	static char	*stash;
+	static char	*stash[OPEN_MAX];
 	char		*line;
 	char		*buffer;
 	ssize_t		bytes;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
-		return (stash = ft_free(stash), NULL);
+		return (stash[fd] = ft_free(stash[fd]), NULL);
 	while (1)
 	{
 		read_the_file(fd, &buffer, &bytes);
-		stash = ft_strjoin(stash, buffer);
-		if (bytes < 0)
-			return (stash = ft_free(stash), NULL);
-		if (!stash)
-			return (stash = ft_free(stash), NULL);
-		if (analyse(stash) && ft_strlen(stash) > 0)
-			return (finalise(&line, &stash), line);
-		if (!stash || (bytes <= 0 && !ft_find(stash, bytes)))
-			return (stash = ft_free(stash), NULL);
-		else if (ft_find(stash, bytes))
-			return (finalise(&line, &stash), stash = ft_free(stash), line);
+		stash[fd] = ft_strjoin(stash[fd], buffer);
+		if (!stash[fd] || bytes < 0)
+			return (stash[fd] = ft_free(stash[fd]), NULL);
+		if (analyse(stash[fd]) && ft_strlen(stash[fd]) > 0)
+			return (finalise(&line, &stash[fd]), line);
+		if (!stash[fd] || (bytes <= 0 && !ft_find(stash[fd], bytes)))
+			return (stash[fd] = ft_free(stash[fd]), NULL);
+		else if (ft_find(stash[fd], bytes))
+			return (finalise(&line, &stash[fd]), stash[fd] = ft_free(stash[fd]),
+				line);
 		else if (bytes < BUFFER_SIZE)
-			return (finalise(&line, &stash), stash = ft_free(stash), line);
+			return (finalise(&line, &stash[fd]), stash[fd] = ft_free(stash[fd]),
+				line);
 	}
+	return (stash[fd] = ft_free(stash[fd]), NULL);
 }
