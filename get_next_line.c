@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mick <mick@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mmarcott <mmarcott@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 01:16:49 by mmarcott          #+#    #+#             */
-/*   Updated: 2022/12/15 13:23:28 by mick             ###   ########.fr       */
+/*   Updated: 2022/12/15 23:37:57 by mmarcott         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,8 @@ Si false: Recommencer en boucle.
 
 int	read_the_file(int fd, char **buffer, ssize_t *bytes)
 {
-	*buffer = malloc((BUFFER_SIZE + 1) * sizeof(char));
+	*buffer = ft_calloc((BUFFER_SIZE + 1), sizeof(char));
 	*bytes = read(fd, *buffer, BUFFER_SIZE);
-	buffer[0][BUFFER_SIZE] = 0;
 	return (1);
 }
 
@@ -49,7 +48,7 @@ void	put_line(char **line, char *stash)
 	int	i;
 
 	i = 0;
-	*line = malloc(sizeof(char) * (ft_strlen(stash) + 1));
+	*line = ft_calloc((ft_strlen(stash) + 1), sizeof(char));
 	while (stash[i] && stash[i] != '\n')
 	{
 		line[0][i] = stash[i];
@@ -57,7 +56,6 @@ void	put_line(char **line, char *stash)
 	}
 	if (stash[i] == '\n')
 		line[0][i++] = '\n';
-	line[0][i] = 0;
 }
 
 int	ft_find(char *stash, ssize_t bytes)
@@ -76,6 +74,20 @@ int	ft_find(char *stash, ssize_t bytes)
 	return (0);
 }
 
+char	*ft_calloc(size_t nmemb, size_t size)
+{
+	char	*memory;
+	size_t	i;
+
+	i = 0;
+	memory = malloc(nmemb * size);
+	if (!memory)
+		return (0);
+	while (i < nmemb)
+		memory[i++] = 0;
+	return (memory);
+}
+
 char	*get_next_line(int fd)
 {
 	static char	*stash;
@@ -86,15 +98,15 @@ char	*get_next_line(int fd)
 	bytes = BUFFER_SIZE;
 	line = NULL;
 	bytes = 1;
-	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, &buffer, 0) < 0)
-		return (stash = ft_free(stash), __DARWIN_NULL);
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (stash = ft_free(stash), NULL);
 	while (1)
 	{
 		read_the_file(fd, &buffer, &bytes);
 		stash = ft_strjoin(stash, buffer);
 		if (!stash)
 			break ;
-		if (analyse(stash) && !ft_strlen(stash))
+		if (analyse(stash) && ft_strlen(stash) > 0)
 			return (finalise(&line, &stash), line);
 		if (!stash || (bytes <= 0 && !ft_find(stash, bytes)))
 			break ;
@@ -104,5 +116,5 @@ char	*get_next_line(int fd)
 			return (finalise(&line, &stash), stash = ft_free(stash), line);
 	}
 	stash = ft_free(stash);
-	return (__DARWIN_NULL);
+	return (NULL);
 }

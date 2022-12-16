@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mick <mick@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mmarcott <mmarcott@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 01:17:29 by mmarcott          #+#    #+#             */
-/*   Updated: 2022/12/03 22:44:40 by mick             ###   ########.fr       */
+/*   Updated: 2022/12/15 23:12:33 by mmarcott         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,6 @@ void	cleanup_stash(char **stash, char *line);
 void	*ft_free(char *p);
 void	finalise(char **line, char **stash);
 void	put_line(char **line, char *stash);
+char	*ft_calloc(size_t nmemb, size_t size);
 
 #endif

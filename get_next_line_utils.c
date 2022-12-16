@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mick <mick@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mmarcott <mmarcott@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 01:19:06 by mmarcott          #+#    #+#             */
-/*   Updated: 2022/12/14 23:23:16 by mick             ###   ########.fr       */
+/*   Updated: 2022/12/15 23:16:12 by mmarcott         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ char	*ft_strjoin(char *s1, char *s2)
 	j = 0;
 	if (!s1 && !s2)
 		return (NULL);
-	joined = malloc((ft_strlen((char *)s1) + ft_strlen((char *)s2) + 1)
-			* sizeof(char));
+	joined = ft_calloc((ft_strlen((char *)s1) + ft_strlen((char *)s2) + 1),
+						sizeof(char));
 	if (!joined)
 		return (NULL);
 	while (s1 && s1[i])
@@ -61,7 +61,6 @@ char	*ft_strjoin(char *s1, char *s2)
 		joined[i + j] = s2[j];
 		j++;
 	}
-	joined[i + j] = 0;
 	return (s1 = ft_free(s1), s2 = ft_free(s2), joined);
 }
 
