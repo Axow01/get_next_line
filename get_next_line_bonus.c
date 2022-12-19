@@ -6,7 +6,7 @@
 /*   By: mmarcott <mmarcott@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 01:16:49 by mmarcott          #+#    #+#             */
-/*   Updated: 2022/12/18 15:57:33 by mmarcott         ###   ########.fr       */
+/*   Updated: 2022/12/18 21:33:21 by mmarcott         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,8 @@ char	*get_next_line(int fd)
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (stash[fd] = ft_free(stash[fd]), NULL);
-	while (1)
+	bytes = BUFFER_SIZE;
+	while (bytes >= BUFFER_SIZE)
 	{
 		read_the_file(fd, &buffer, &bytes);
 		stash[fd] = ft_strjoin(stash[fd], buffer);
@@ -91,9 +92,9 @@ char	*get_next_line(int fd)
 			return (stash[fd] = ft_free(stash[fd]), NULL);
 		if (analyse(stash[fd]) && ft_strlen(stash[fd]) > 0)
 			return (finalise(&line, &stash[fd]), line);
-		else if (ft_find(stash[fd], bytes) || bytes < BUFFER_SIZE)
-			return (finalise(&line, &stash[fd]), stash[fd] = ft_free(stash[fd]),
-				line);
 	}
+	if (ft_find(stash[fd], bytes) || bytes < BUFFER_SIZE)
+		return (finalise(&line, &stash[fd]), stash[fd] = ft_free(stash[fd]),
+			line);
 	return (stash[fd] = ft_free(stash[fd]), NULL);
 }
