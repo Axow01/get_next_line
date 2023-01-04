@@ -6,7 +6,7 @@
 /*   By: mmarcott <mmarcott@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 01:16:49 by mmarcott          #+#    #+#             */
-/*   Updated: 2022/12/18 21:33:21 by mmarcott         ###   ########.fr       */
+/*   Updated: 2023/01/04 16:14:03 by mmarcott         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,8 @@ char	*get_next_line(int fd)
 	char		*buffer;
 	ssize_t		bytes;
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	buffer = NULL;
+	if (fd < 0 || fd > OPEN_MAX || BUFFER_SIZE <= 0 || read(fd, &buffer, 0) < 0)
 		return (stash[fd] = ft_free(stash[fd]), NULL);
 	bytes = BUFFER_SIZE;
 	while (bytes >= BUFFER_SIZE)
