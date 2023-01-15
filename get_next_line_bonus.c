@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmarcott <mmarcott@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mick <mick@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 01:16:49 by mmarcott          #+#    #+#             */
-/*   Updated: 2023/01/04 16:14:03 by mmarcott         ###   ########.fr       */
+/*   Updated: 2023/01/14 20:28:52 by mick             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,19 +22,6 @@ int	read_the_file(int fd, char **buffer, ssize_t *bytes)
 	}
 	*bytes = read(fd, *buffer, BUFFER_SIZE);
 	return (1);
-}
-
-static int	analyse(char *stash)
-{
-	int	i;
-
-	i = 0;
-	while (stash[i])
-	{
-		if (stash[i++] == '\n')
-			return (1);
-	}
-	return (0);
 }
 
 void	put_line(char **line, char *stash)
@@ -79,6 +66,7 @@ char	*get_next_line(int fd)
 	char		*line;
 	char		*buffer;
 	ssize_t		bytes;
+	int			size_of_stash;
 
 	buffer = NULL;
 	if (fd < 0 || fd > OPEN_MAX || BUFFER_SIZE <= 0 || read(fd, &buffer, 0) < 0)
@@ -88,10 +76,11 @@ char	*get_next_line(int fd)
 	{
 		read_the_file(fd, &buffer, &bytes);
 		stash[fd] = ft_strjoin(stash[fd], buffer);
+		size_of_stash = ft_strlen(stash[fd]);
 		if (!stash[fd] || bytes < 0 || (bytes <= 0 && !ft_find(stash[fd],
 					bytes)))
 			return (stash[fd] = ft_free(stash[fd]), NULL);
-		if (analyse(stash[fd]) && ft_strlen(stash[fd]) > 0)
+		if (ft_find(stash[fd], bytes) && size_of_stash > 0)
 			return (finalise(&line, &stash[fd]), line);
 	}
 	if (ft_find(stash[fd], bytes) || bytes < BUFFER_SIZE)
