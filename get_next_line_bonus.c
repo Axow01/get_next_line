@@ -6,58 +6,49 @@
 /*   By: mmarcott <mmarcott@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 01:16:49 by mmarcott          #+#    #+#             */
-/*   Updated: 2023/01/16 11:15:36 by mmarcott         ###   ########.fr       */
+/*   Updated: 2023/01/16 16:30:59 by mmarcott         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+/*
+	1- Read the file with the value of BUFFER_SIZE.
+	2- Check the stash variable to see if there is a \n.
+	3- If so then return the variable up to the \n.
+	4- Else continue to read.
+*/
+
 #include "get_next_line_bonus.h"
 
-int	read_the_file(int fd, char **buffer, ssize_t *bytes)
-{
-	*buffer = ft_calloc((BUFFER_SIZE + 1), sizeof(char));
-	if (!buffer[0])
-	{
-		*buffer = NULL;
-		return (0);
-	}
-	*bytes = read(fd, *buffer, BUFFER_SIZE);
-	return (1);
-}
-
-void	put_line(char **line, char *stash)
+int	ft_find(char *str)
 {
 	int	i;
 
 	i = 0;
-	*line = ft_calloc((ft_strlen(stash) + 1), sizeof(char));
-	if (!line[0])
+	while (str[i])
 	{
-		*line = NULL;
-		return ;
-	}
-	while (stash[i] && stash[i] != '\n')
-	{
-		line[0][i] = stash[i];
-		i++;
-	}
-	if (stash[i] == '\n')
-		line[0][i++] = '\n';
-}
-
-int	ft_find(char *stash, ssize_t bytes)
-{
-	int	i;
-
-	i = 0;
-	while (stash && stash[i])
-	{
-		if (stash[i] == 0 || stash[i] == '\n')
+		if (str[i] == '\n')
 			return (1);
 		i++;
 	}
-	if ((bytes == 0 || bytes < BUFFER_SIZE) && i > 0)
-		return (1);
 	return (0);
+}
+
+void	extract(char *str, char **line)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] != '\n' && str[i])
+		i++;
+	*line = ft_calloc(i += 1, sizeof(char));
+	i = 0;
+	while (str[i] && str[i] != '\n')
+	{
+		line[0][i] = str[i];
+		i++;
+	}
+	if (str[i] == '\n')
+		line[0][++i] = '\n';
 }
 
 char	*get_next_line(int fd)
@@ -66,25 +57,34 @@ char	*get_next_line(int fd)
 	char		*line;
 	char		*buffer;
 	ssize_t		bytes;
-	int			size_of_stash;
 
-	buffer = NULL;
+	line = NULL;
 	if (fd < 0 || fd > OPEN_MAX || BUFFER_SIZE <= 0 || read(fd, &buffer, 0) < 0)
 		return (stash[fd] = ft_free(stash[fd]), NULL);
 	bytes = BUFFER_SIZE;
-	while (bytes >= BUFFER_SIZE)
+	stash[fd] = ft_calloc(1, sizeof(char));
+	while (bytes == BUFFER_SIZE && !ft_find(stash[fd]))
 	{
-		read_the_file(fd, &buffer, &bytes);
+		buffer = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
+		bytes = read(fd, buffer, BUFFER_SIZE);
 		stash[fd] = ft_strjoin(stash[fd], buffer);
-		size_of_stash = ft_strlen(stash[fd]);
-		if (!stash[fd] || bytes < 0 || (bytes <= 0 && !ft_find(stash[fd],
-					bytes)))
-			return (stash[fd] = ft_free(stash[fd]), NULL);
-		if (ft_find(stash[fd], bytes) && size_of_stash > 0)
-			return (finalise(&line, &stash[fd]), line);
 	}
-	if (ft_find(stash[fd], bytes) || bytes < BUFFER_SIZE)
-		return (finalise(&line, &stash[fd]), stash[fd] = ft_free(stash[fd]),
-			line);
-	return (stash[fd] = ft_free(stash[fd]), NULL);
+	if (bytes <= 0 && ft_strlen(stash[fd]) > 0)
+	{
+		extract(stash[fd], &line);
+		return (line);
+	}
+	else
+		return (stash[fd] = ft_free(stash[fd]), NULL);
 }
+
+/*
+int	main(void)
+{
+	char *line;
+
+	line = get_next_line(open("file.txt", O_RDONLY));
+	printf("%s", line);
+	ft_free(line);
+	return (0);
+}*/

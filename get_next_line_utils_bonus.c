@@ -6,7 +6,7 @@
 /*   By: mmarcott <mmarcott@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/25 01:19:06 by mmarcott          #+#    #+#             */
-/*   Updated: 2022/12/16 14:53:20 by mmarcott         ###   ########.fr       */
+/*   Updated: 2023/01/16 13:01:56 by mmarcott         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,18 +70,4 @@ void	*ft_free(char *p)
 	if (p)
 		free(p);
 	return (NULL);
-}
-
-void	finalise(char **line, char **stash)
-{
-	int	i;
-	int	k;
-
-	put_line(line, *stash);
-	k = ft_strlen(*line);
-	i = 0;
-	while (stash[0] && stash[0][k])
-		stash[0][i++] = stash[0][k++];
-	while (stash[0] && stash[0][i])
-		stash[0][i++] = 0;
 }
